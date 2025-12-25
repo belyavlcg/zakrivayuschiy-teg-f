@@ -1,16 +1,415 @@
-/* Здесь вы напишете основную часть стилей страницы.
-
-Будьте внимательны! Для корректной работы скриптов на этом сайте нужно, чтобы в HTML некоторые классы были названы особым образом:
-✦ like-icon — для svg-иконки анимированного сердца
-✦ card__like-button — для кнопки Like рядом с иконкой
-✦ card__icon-button — для кнопки, оборачивающей иконку
-✦ card__icon-button — для кнопки, оборачивающей иконку
-✦ is-liked — для обозначения состояния лайкнутой иконки в виде сердца
-✦ button__text — для обозначения текстового элемента внутри кнопки
-
-*/
-
 .page {
   min-inline-size: 320px;
   min-block-size: 100dvb;
+  background-image: repeating-linear-gradient(
+      to bottom,
+      var(--background-gradient)
+    ),
+    repeating-linear-gradient(to right, var(--background-gradient)),
+    linear-gradient(#e7e7e7 0.01%, #1a1a1a);
+
+  background-blend-mode: normal;
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: var(--font-inter);
+  font-variation-settings: "wght" var(--wght);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.simple-block {
+  /*opacity: 0.5;*/
+  outline: var(--outline);
+  background-color: var(--color-background);
+}
+
+.header {
+  min-width: clamp(23.438rem, 16.285rem + 30.516vw, 43.75rem);
+  margin-top: 100px;
+  margin-bottom: 98px;
+  padding: 130px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-press);
+}
+
+.header-logo {
+  font-size: clamp(3.063rem, 2.71rem + 1.502vw, 4.063rem);
+}
+
+.header-text {
+  font-size: clamp(0.875rem, 0.677rem + 0.845vw, 1.438rem);
+  text-transform: uppercase;
+}
+
+.main-block {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  width: clamp(23.438rem, 16.285rem + 30.516vw, 43.75rem);
+}
+
+.card {
+  display: flex;
+  outline-offset: -2px;
+  flex-direction: column;
+}
+
+.card-header {
+  font-size: var(--font-size-header);
+  padding: 7px 12px 3px;
+  font-variation-settings: "wght" var(--wght);
+}
+
+.card-image-container {
+  height: clamp(23.188rem, 16.035rem + 30.516vw, 43.5rem);
+  outline: var(--outline);
+  margin: 2px;
+  position: relative;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card-position-offset-left {
+  object-position: -160px;
+}
+
+.card-position-offset-right {
+  object-position: 0px;
+}
+
+.filter-saturate {
+  filter: saturate(50%);
+}
+
+.filter-brightness {
+  filter: brightness(200%);
+}
+
+.filter-hue-rotate {
+  filter: hue-rotate(90deg);
+}
+
+.filter-invert-hue-rotate-mix {
+  filter: invert(0.9) hue-rotate(180deg);
+}
+
+.filter-sepia {
+  filter: sepia(100%);
+}
+
+.filter-blur {
+  filter: blur(5px);
+}
+
+.filter-contrast {
+  filter: contrast(80%);
+}
+
+.label {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  text-transform: uppercase;
+  font-family: var(--font-press);
+  font-size: var(--font-size-text);
+  opacity: 0.5;
+  text-shadow: -1px -1px 0 var(--color-background),
+    1px -1px 0 var(--color-background), -1px 1px 0 var(--color-background),
+    1px 1px 0 var(--color-background);
+  mix-blend-mode: hard-light;
+}
+
+@supports (-webkit-text-stroke: 1px var(--color-background)) or
+  (text-stroke: 1px var(--color-background)) {
+  .label {
+    text-shadow: unset;
+    -webkit-text-stroke: 1px var(--color-background);
+    text-stroke: 1px var(--color-background);
+  }
+}
+
+.card-text-block {
+  padding: 25px 27px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  font-size: var(--font-size-header);
+  line-height: 21px;
+}
+
+.card-button-container {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  margin-right: 27px;
+  margin-bottom: 27px;
+}
+
+/* Кнопка сердца */
+
+.card__icon-button {
+  width: 39px;
+  height: 34px;
+  margin-top: 2px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.card__icon-button:focus-visible {
+  outline: var(--outline);
+}
+
+.like-icon {
+  transform-origin: center;
+}
+
+.like-icon:focus {
+  outline: none;
+}
+
+/* Анимация сердца */
+
+.contour {
+  transition-duration: 0.1s;
+  transition-timing-function: linear;
+  transition-property: fill;
+}
+
+.main-body {
+  fill: transparent;
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
+}
+
+.core {
+  transition-delay: 0.03s;
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
+  fill: transparent;
+}
+
+.sparks {
+  fill: transparent;
+  transform-origin: center;
+}
+
+.like-icon:hover .core {
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
+  fill: var(--color-text);
+}
+
+.like-icon:hover .main-body {
+  transition-delay: 0.05s;
+  transition-duration: 0.5s;
+  transition-timing-function: linear;
+  fill: var(--color-text);
+}
+
+.like-icon:active .core {
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
+  fill: var(--color-accent);
+}
+
+.like-icon:active .main-body {
+  fill: var(--color-accent);
+  transition-delay: 0.05s;
+  transition-duration: 0.5s;
+  transition-timing-function: linear;
+}
+
+.like-icon.is-liked .contour {
+  fill: var(--color-accent);
+  transition-delay: 0.06s;
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
+}
+
+.like-icon.is-liked .core {
+  fill: var(--color-accent);
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
+}
+
+.like-icon.is-liked .main-body {
+  fill: var(--color-accent);
+  transition-delay: 0.05s;
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
+}
+
+.like-icon.is-liked {
+  animation: heart-click 0.1s 0.3s ease-in;
+}
+
+.like-icon.is-liked .sparks {
+  animation: sparks-click 0.3s 0.3s ease-in;
+}
+
+.simple-button {
+  cursor: pointer;
+  position: relative;
+  background-color: var(--color-background);
+  border: var(--outline);
+  font-family: var(--font-press);
+  font-size: var(--font-size-text);
+}
+
+/* Кнопка like */
+
+.card__like-button {
+  min-width: 130px;
+  min-height: 38px;
+  padding-top: 2px;
+}
+
+.button__text {
+  mix-blend-mode: difference;
+  color: var(--color-background);
+  z-index: 1;
+  position: relative;
+}
+
+.animated-button {
+  box-shadow: unset;
+  transition: 0.3s ease;
+}
+
+.animated-button:focus {
+  box-shadow: 2px 2px var(--color-text);
+}
+
+.animated-button::after {
+  content: "";
+  background-color: var(--color-text);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  transform-origin: left;
+  transition: 0.5s ease-in-out;
+  transform: scale(0, 1);
+}
+
+.animated-button:hover.animated-button::after {
+  transform: scale(1, 1);
+}
+
+/* Подвал */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 100px;
+}
+
+/* Кнопка сохранить на память */
+
+.button-save {
+  margin-top: 50px;
+  min-height: 55px;
+  min-width: 335px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+}
+
+/* Диалог по кнопке сохранить на память */
+.dialog-save {
+  top: -4px;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: center;
+  max-width: 349px;
+}
+
+.button-ok {
+  min-height: 36px;
+  min-width: 290px;
+  margin-bottom: 28px;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  max-width: 300px;
+  margin-top: 31px;
+  margin-left: 29px;
+  margin-right: 32px;
+  gap: 20px;
+}
+
+.dialog-text {
+  font-family: var(--font-press);
+  font-size: var(--font-size-text);
+  line-height: 150%;
+  text-transform: uppercase;
+}
+
+.floppy-dialog {
+  margin-top: 2px;
+  width: 39px;
+  height: 39px;
+}
+
+dialog::backdrop {
+  position: fixed;
+  inset: 0px;
+  background: var(--color-text);
+  opacity: 0.75;
+}
+
+.floppy-button {
+  width: 21px;
+  height: 21px;
+}
+
+@media (width <= 375px) {
+  .header {
+    margin-bottom: 100px;
+    padding: 122px 0;
+    outline-offset: -2px;
+  }
+
+  .card {
+    min-height: unset;
+  }
+
+  .button-save {
+    min-height: 84px;
+    min-width: 306px;
+    flex-direction: column;
+  }
+
+  .floppy-button {
+    width: 28px;
+    height: 28px;
+  }
+
+  .dialog-header {
+    margin-left: 38px;
+    margin-top: 29px;
+  }
+
+  .button-ok {
+    min-height: 38px;
+    min-width: 260px;
+  }
 }
